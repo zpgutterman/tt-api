@@ -4,12 +4,8 @@
 	 <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>java:/MySqlDS</jta-data-source>
     <properties>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
       <property name="hibernate.show_sql" value="true"/>
-      <property name="hibernate.format_sql" value="true"/>
-      <property name="hibernate.use_sql_comments" value="true"/>
-      <property name="hibernate.generate_statistics" value="true"/>
     </properties>
 	</persistence-unit>
 </persistence>

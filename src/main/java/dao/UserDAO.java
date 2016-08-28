@@ -28,56 +28,58 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import model.User;
-
+import model.UserGroup;
 
 @ApplicationScoped
 public class UserDAO {
 
-    @PersistenceContext(unitName="more-of-everything")
-    private EntityManager em;
-    
-    public User findById(int id) {
-    	System.out.println("finding user by id");
-    	User foundUser = em.find(User.class, id);
-    	System.out.println("Name: " + foundUser.getUsername());
-        return foundUser;
-    }
-    
-    public Integer count() {
-    	Query query = em.createQuery("SELECT COUNT (u.userid) FROM User u");
-    	return ((Long) query.getSingleResult()).intValue();
-    }
-    
-    public List<User> findUsers(int startPosition, int maxResults, String sortFields, String sortDirections) {
-        TypedQuery<User> query =
-                em.createQuery("SELECT u FROM User u ORDER BY u." + sortFields + " " + sortDirections, 
-                		User.class);
-        query.setFirstResult(startPosition);
-        query.setMaxResults(maxResults);
-        return query.getResultList();
-    }
-    
-    public User findByEmail(String email) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteria = cb.createQuery(User.class);
-        Root<User> user = criteria.from(User.class);
-        // Swap criteria statements if you would like to try out type-safe criteria queries, a new
-        // feature in JPA 2.0
-        // criteria.select(member).where(cb.equal(member.get(Member_.email), email));
-        criteria.select(user).where(cb.equal(user.get("email"), email));
-        return em.createQuery(criteria).getSingleResult();
-    }
+	@PersistenceContext(unitName = "more-of-everything")
+	private EntityManager em;
 
-    public List<User> findAllOrderedByName() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteria = cb.createQuery(User.class);
-        Root<User> user = criteria.from(User.class);
-        // Swap criteria statements if you would like to try out type-safe criteria queries, a new
-        // feature in JPA 2.0
-        // criteria.select(member).orderBy(cb.asc(member.get(Member_.name)));
-        criteria.select(user).orderBy(cb.asc(user.get("username")));
-        return em.createQuery(criteria).getResultList();
-    }
+	public User findById(int id) {
+		System.out.println("finding user by id");
+		User foundUser = em.find(User.class, id);
+		System.out.println("Name: " + foundUser.getUsername());
+		return foundUser;
+	}
+
+	public Integer count() {
+		Query query = em.createQuery("SELECT COUNT (u.userid) FROM User u");
+		return ((Long) query.getSingleResult()).intValue();
+	}
+
+	public List<User> findUsers(int startPosition, int maxResults, String sortFields, String sortDirections) {
+		TypedQuery<User> query = em.createQuery("SELECT u FROM User u ORDER BY u." + sortFields + " " + sortDirections,
+				User.class);
+		query.setFirstResult(startPosition);
+		query.setMaxResults(maxResults);
+		return query.getResultList();
+	}
+
+	public User findByEmail(String email) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<User> criteria = cb.createQuery(User.class);
+		Root<User> user = criteria.from(User.class);
+		// Swap criteria statements if you would like to try out type-safe
+		// criteria queries, a new
+		// feature in JPA 2.0
+		// criteria.select(member).where(cb.equal(member.get(Member_.email),
+		// email));
+		criteria.select(user).where(cb.equal(user.get("email"), email));
+		return em.createQuery(criteria).getSingleResult();
+	}
+
+	public List<User> findAllOrderedByName() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<User> criteria = cb.createQuery(User.class);
+		Root<User> user = criteria.from(User.class);
+		// Swap criteria statements if you would like to try out type-safe
+		// criteria queries, a new
+		// feature in JPA 2.0
+		// criteria.select(member).orderBy(cb.asc(member.get(Member_.name)));
+		criteria.select(user).orderBy(cb.asc(user.get("username")));
+		return em.createQuery(criteria).getResultList();
+	}
 
 	public User updateUser(User userToUpdate) {
 		return em.merge(userToUpdate);
@@ -85,6 +87,29 @@ public class UserDAO {
 
 	public void removeUser(User userToDelete) {
 		em.remove(userToDelete);
-		
+
+	}
+
+	public UserGroup findGroupById(int id) {
+		UserGroup foundUserGroup = em.find(UserGroup.class, id);
+		return foundUserGroup;
+	}
+
+	public void createUser(User user) {
+		User newUser = new User();
+		newUser.setEmail(user.getEmail());
+		newUser.setPassword(user.getPassword());
+		newUser.setUsername(user.getUsername());
+		newUser.setUserGroup(user.getUserGroup());
+		em.persist(newUser);
+
+	}
+
+	public List<UserGroup> findUserGroups() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<UserGroup> criteria = cb.createQuery(UserGroup.class);
+		Root<UserGroup> userGroup = criteria.from(UserGroup.class);
+		criteria.select(userGroup);
+		return em.createQuery(criteria).getResultList();
 	}
 }

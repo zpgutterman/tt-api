@@ -38,7 +38,6 @@ public class UserGroup implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-
 	@Column(name = "group_id", unique = true, nullable = false)
 	public Integer getGroupId() {
 		return this.groupId;

@@ -39,10 +39,9 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
 import dao.UserDAO;
 import model.User;
-
+import model.UserGroup;
 
 /**
  * JAX-RS Example
@@ -62,20 +61,15 @@ public class UserRestService {
 	@Inject
 	private UserDAO userDao;
 
-
-
 	private Integer countUsers() {
 		return userDao.count();
 	}
-	
+
 	@OPTIONS
 	public Response options() {
-	    return Response
-	            .status(Response.Status.OK)
-	            .header("Access-Control-Allow-Origin", "*")
-	            .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
-	            .header("Access-Control-Allow-Credentials",true)
-	            .build();
+		return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.header("Access-Control-Allow-Credentials", true).build();
 	}
 
 	@GET
@@ -110,8 +104,8 @@ public class UserRestService {
 		try {
 			// TODO Validate User
 
-			//TODO Register User
-
+			// TODO Register User
+			userDao.createUser(user);
 			// Create an "ok" response
 			builder = Response.ok();
 		} catch (ConstraintViolationException ce) {
@@ -131,7 +125,6 @@ public class UserRestService {
 
 		return builder.build();
 	}
-
 
 	/**
 	 * Creates a JAX-RS "Bad Request" response including a map of all violation
@@ -153,35 +146,45 @@ public class UserRestService {
 		return Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
 	}
 
-
-
-//	@POST
-//	public User saveUser(User user) {
-//		if (user.getUserid() == 0) {
-//			try {
-//				//TODO Register User
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} else {
-//			User userToUpdate = lookupUserById(user.getUserid());
-//			userToUpdate.setEmail(user.getEmail());
-//			userToUpdate.setPassword(user.getPassword());
-//			userToUpdate.setUsername(user.getUsername());
-//			user = userDao.updateUser(userToUpdate);
-//		}
-//		return user;
-//	}
+	// @POST
+	// public User saveUser(User user) {
+	// if (user.getUserid() == 0) {
+	// try {
+	// //TODO Register User
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// } else {
+	// User userToUpdate = lookupUserById(user.getUserid());
+	// userToUpdate.setEmail(user.getEmail());
+	// userToUpdate.setPassword(user.getPassword());
+	// userToUpdate.setUsername(user.getUsername());
+	// user = userDao.updateUser(userToUpdate);
+	// }
+	// return user;
+	// }
 
 	@DELETE
-	@Path("{userid}")
+	@Path("{userid:[0-9][0-9]*}")
 	public void deleteItem(@PathParam("userid") int id) {
 		userDao.removeUser(lookupUserById(id));
 	}
+
 	
 	@GET
-	@Path("{userid}")
-	public User listusers(@PathParam("userid") int id) {
-		return userDao.findById(id);
+	@Path("groups/{id:[0-9][0-9]*}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public UserGroup lookupUserGroupById(@PathParam("id") int id) {
+		UserGroup userGroup = userDao.findGroupById(id);
+		if (userGroup == null) {
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
+		}
+		return userGroup;
+	}
+	
+	@GET
+	@Path("groups")
+	public List<UserGroup> listAllUserGroups() {
+		return userDao.findUserGroups();
 	}
 }

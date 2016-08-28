@@ -35,9 +35,12 @@ public class UserDAO {
 
     @PersistenceContext(unitName="more-of-everything")
     private EntityManager em;
-
+    
     public User findById(int id) {
-        return em.find(User.class, id);
+    	System.out.println("finding user by id");
+    	User foundUser = em.find(User.class, id);
+    	System.out.println("Name: " + foundUser.getUsername());
+        return foundUser;
     }
     
     public Integer count() {

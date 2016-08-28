@@ -19,8 +19,8 @@ package dao;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -33,7 +33,7 @@ import model.User;
 @ApplicationScoped
 public class UserDAO {
 
-    @Inject
+    @PersistenceContext(unitName="more-of-everything")
     private EntityManager em;
 
     public User findById(int id) {

@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -39,7 +39,6 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.jersey.process.internal.RequestScoped;
 
 import dao.UserDAO;
 import model.User;
@@ -56,9 +55,6 @@ import model.User;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class UserRestService {
-
-	@Inject
-	private Logger log;
 
 	@Inject
 	private Validator validator;
@@ -147,7 +143,6 @@ public class UserRestService {
 	 * @return JAX-RS response containing all violations
 	 */
 	private Response.ResponseBuilder createViolationResponse(Set<ConstraintViolation<?>> violations) {
-		log.fine("Validation completed. violations found: " + violations.size());
 
 		Map<String, String> responseObj = new HashMap<String, String>();
 
@@ -160,23 +155,23 @@ public class UserRestService {
 
 
 
-	@POST
-	public User saveUser(User user) {
-		if (user.getUserid() == 0) {
-			try {
-				//TODO Register User
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			User userToUpdate = lookupUserById(user.getUserid());
-			userToUpdate.setEmail(user.getEmail());
-			userToUpdate.setPassword(user.getPassword());
-			userToUpdate.setUsername(user.getUsername());
-			user = userDao.updateUser(userToUpdate);
-		}
-		return user;
-	}
+//	@POST
+//	public User saveUser(User user) {
+//		if (user.getUserid() == 0) {
+//			try {
+//				//TODO Register User
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		} else {
+//			User userToUpdate = lookupUserById(user.getUserid());
+//			userToUpdate.setEmail(user.getEmail());
+//			userToUpdate.setPassword(user.getPassword());
+//			userToUpdate.setUsername(user.getUsername());
+//			user = userDao.updateUser(userToUpdate);
+//		}
+//		return user;
+//	}
 
 	@DELETE
 	@Path("{userid}")
@@ -186,7 +181,7 @@ public class UserRestService {
 	
 	@GET
 	@Path("{userid}")
-	public void listusers(@PathParam("userid") int id) {
-		userDao.findById(id);
+	public User listusers(@PathParam("userid") int id) {
+		return userDao.findById(id);
 	}
 }

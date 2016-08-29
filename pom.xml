@@ -44,6 +44,12 @@
 			<version>2.0-EDR2</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+		</dependency>
+
 
 		<!-- Import the JPA API, we use provided scope as the API is included in 
 			JBoss EAP -->
@@ -67,10 +73,10 @@
 			<version>1.0.0.GA</version>
 		</dependency>
 		<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlets</artifactId>
-    <version>9.4.0.M1</version>
-</dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+			<version>9.4.0.M1</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>

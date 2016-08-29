@@ -26,11 +26,13 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import model.User;
 import model.UserGroup;
 
 @ApplicationScoped
+@Transactional
 public class UserDAO {
 
 	@PersistenceContext(unitName = "more-of-everything")
@@ -86,7 +88,7 @@ public class UserDAO {
 	}
 
 	public void removeUser(User userToDelete) {
-		em.remove(userToDelete);
+		em.remove(em.merge(userToDelete));
 
 	}
 
@@ -111,5 +113,16 @@ public class UserDAO {
 		Root<UserGroup> userGroup = criteria.from(UserGroup.class);
 		criteria.select(userGroup);
 		return em.createQuery(criteria).getResultList();
+	}
+
+	public void removeUserGroup(UserGroup userGroupToDelete) {
+		em.remove(em.merge(userGroupToDelete));
+		
+	}
+
+	public void createUserGroup(UserGroup userGroup) {
+		UserGroup newUserGroup = new UserGroup();
+		newUserGroup.setName(userGroup.getName());
+		em.persist(newUserGroup);
 	}
 }

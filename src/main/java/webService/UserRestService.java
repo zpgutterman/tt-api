@@ -166,7 +166,7 @@ public class UserRestService {
 
 	@DELETE
 	@Path("{userid:[0-9][0-9]*}")
-	public void deleteItem(@PathParam("userid") int id) {
+	public void deleteUser(@PathParam("userid") int id) {
 		userDao.removeUser(lookupUserById(id));
 	}
 
@@ -182,9 +182,26 @@ public class UserRestService {
 		return userGroup;
 	}
 	
+	@DELETE
+	@Path("groups/{id:[0-9][0-9]*}")
+	public void deleteUserGroup(@PathParam("id") int id) {
+		userDao.removeUserGroup(lookupUserGroupById(id));
+	}
+	
 	@GET
 	@Path("groups")
 	public List<UserGroup> listAllUserGroups() {
 		return userDao.findUserGroups();
+	}
+	
+	@POST
+	@Path("groups")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void createUserGroup(UserGroup userGroup) {
+		
+		//TODO add validation
+		userDao.createUserGroup(userGroup);
+		
 	}
 }

@@ -39,9 +39,7 @@ public class UserDAO {
 	private EntityManager em;
 
 	public User findById(int id) {
-		System.out.println("finding user by id");
 		User foundUser = em.find(User.class, id);
-		System.out.println("Name: " + foundUser.getUsername());
 		return foundUser;
 	}
 

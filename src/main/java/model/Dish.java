@@ -87,7 +87,7 @@ public class Dish implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cuisine")
 	public Cuisine getCuisine() {
 		return this.cuisine;
@@ -97,7 +97,7 @@ public class Dish implements java.io.Serializable {
 		this.cuisine = cuisine;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "recipe", nullable = false)
 	public Recipe getRecipe() {
 		return this.recipe;
@@ -107,7 +107,7 @@ public class Dish implements java.io.Serializable {
 		this.recipe = recipe;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "created_by")
 	public User getUser() {
 		return this.user;
@@ -227,13 +227,13 @@ public class Dish implements java.io.Serializable {
 		this.public_ = public_;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dish")
-	public Set<DishHistory> getDishHistories() {
-		return this.dishHistories;
-	}
-
-	public void setDishHistories(Set<DishHistory> dishHistories) {
-		this.dishHistories = dishHistories;
-	}
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dish")
+//	public Set<DishHistory> getDishHistories() {
+//		return this.dishHistories;
+//	}
+//
+//	public void setDishHistories(Set<DishHistory> dishHistories) {
+//		this.dishHistories = dishHistories;
+//	}
 
 }

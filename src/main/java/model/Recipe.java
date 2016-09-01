@@ -73,7 +73,7 @@ public class Recipe implements java.io.Serializable {
 		this.description = description;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "recipe")
 	public Set<RecipeStepIngredient> getRecipeStepIngredients() {
 		return this.recipeStepIngredients;
 	}
@@ -82,7 +82,7 @@ public class Recipe implements java.io.Serializable {
 		this.recipeStepIngredients = recipeStepIngredients;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "recipe")
 	public Set<RecipeStep> getRecipeSteps() {
 		return this.recipeSteps;
 	}
@@ -91,13 +91,13 @@ public class Recipe implements java.io.Serializable {
 		this.recipeSteps = recipeSteps;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
-	public Set<Dish> getDishes() {
-		return this.dishes;
-	}
-
-	public void setDishes(Set<Dish> dishes) {
-		this.dishes = dishes;
-	}
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+//	public Set<Dish> getDishes() {
+//		return this.dishes;
+//	}
+//
+//	public void setDishes(Set<Dish> dishes) {
+//		this.dishes = dishes;
+//	}
 
 }

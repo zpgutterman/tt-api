@@ -56,13 +56,13 @@ public class Cuisine implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cuisine")
-	public Set<Dish> getDishes() {
-		return this.dishes;
-	}
-
-	public void setDishes(Set<Dish> dishes) {
-		this.dishes = dishes;
-	}
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cuisine")
+//	public Set<Dish> getDishes() {
+//		return this.dishes;
+//	}
+//
+//	public void setDishes(Set<Dish> dishes) {
+//		this.dishes = dishes;
+//	}
 
 }

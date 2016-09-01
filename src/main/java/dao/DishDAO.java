@@ -55,7 +55,7 @@ public class DishDAO {
 	}
 
 	public void createDish(Dish dish) {
-		//TODO implement
+		em.persist(dish);
 		
 	}
 

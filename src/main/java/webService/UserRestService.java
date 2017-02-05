@@ -41,7 +41,7 @@ import javax.ws.rs.core.Response;
 
 import dao.UserDAO;
 import model.User;
-import model.UserGroup;
+
 
 /**
  * JAX-RS Example
@@ -171,37 +171,5 @@ public class UserRestService {
 	}
 
 	
-	@GET
-	@Path("groups/{id:[0-9][0-9]*}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public UserGroup lookupUserGroupById(@PathParam("id") int id) {
-		UserGroup userGroup = userDao.findGroupById(id);
-		if (userGroup == null) {
-			throw new WebApplicationException(Response.Status.NOT_FOUND);
-		}
-		return userGroup;
-	}
 	
-	@DELETE
-	@Path("groups/{id:[0-9][0-9]*}")
-	public void deleteUserGroup(@PathParam("id") int id) {
-		userDao.removeUserGroup(lookupUserGroupById(id));
-	}
-	
-	@GET
-	@Path("groups")
-	public List<UserGroup> listAllUserGroups() {
-		return userDao.findUserGroups();
-	}
-	
-	@POST
-	@Path("groups")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public void createUserGroup(UserGroup userGroup) {
-		
-		//TODO add validation
-		userDao.createUserGroup(userGroup);
-		
-	}
 }

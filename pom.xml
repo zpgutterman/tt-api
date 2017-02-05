@@ -3,14 +3,14 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.moe</groupId>
-	<artifactId>more-of-everything</artifactId>
+	<groupId>com.tt</groupId>
+	<artifactId>trumptweet</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>more-of-everything</name>
+	<name>Trump-Tweets</name>
 
 	<build>
-		<finalName>more-of-everything</finalName>
+		<finalName>trumptweetapi</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -22,6 +22,11 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+			<plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.1.0.Alpha11</version>
+            </plugin>
 		</plugins>
 	</build>
 	<repositories>

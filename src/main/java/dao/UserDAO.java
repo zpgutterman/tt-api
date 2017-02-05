@@ -29,13 +29,12 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import model.User;
-import model.UserGroup;
 
 @ApplicationScoped
 @Transactional
 public class UserDAO {
 
-	@PersistenceContext(unitName = "more-of-everything")
+	@PersistenceContext(unitName = "trump-tweet-api")
 	private EntityManager em;
 
 	public User findById(int id) {
@@ -90,37 +89,19 @@ public class UserDAO {
 
 	}
 
-	public UserGroup findGroupById(int id) {
-		UserGroup foundUserGroup = em.find(UserGroup.class, id);
-		return foundUserGroup;
-	}
+
 
 	public void createUser(User user) {
 		User newUser = new User();
 		newUser.setEmail(user.getEmail());
 		newUser.setPassword(user.getPassword());
 		newUser.setUsername(user.getUsername());
-		newUser.setUserGroup(user.getUserGroup());
+		newUser.setUserClass(user.getUserClass());
 		em.persist(newUser);
 
 	}
 
-	public List<UserGroup> findUserGroups() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<UserGroup> criteria = cb.createQuery(UserGroup.class);
-		Root<UserGroup> userGroup = criteria.from(UserGroup.class);
-		criteria.select(userGroup);
-		return em.createQuery(criteria).getResultList();
-	}
 
-	public void removeUserGroup(UserGroup userGroupToDelete) {
-		em.remove(em.merge(userGroupToDelete));
-		
-	}
 
-	public void createUserGroup(UserGroup userGroup) {
-		UserGroup newUserGroup = new UserGroup();
-		newUserGroup.setName(userGroup.getName());
-		em.persist(newUserGroup);
-	}
+	
 }
